@@ -51,18 +51,15 @@
                     <p:column headerText="ID">
                         <p:outputLabel value="#{obj.id}"/>
                     </p:column>
-                    <p:column headerText="Título">
-                        <p:outputLabel value="#{obj.titulo}"/>
+                    <p:column headerText="Cliente">
+                        <p:outputLabel value="#{obj.cliente}"/>
                     </p:column>
-                    <p:column headerText="ISBN">
-                        <p:outputLabel value="#{obj.isbn}"/>
+                    <p:column headerText="Funcionario">
+                        <p:outputLabel value="#{obj.funcionario}"/>
                     </p:column>
-                    <p:column headerText="Autor">
-                        <p:outputLabel value="#{obj.autor}"/>
-                    </p:column>
-                    <p:column headerText="Gênero">
-                        <p:outputLabel value="#{obj.genero.nome}"/>
-                    </p:column>    
+                    <p:column headerText="Exemplar">
+                        <p:outputLabel value="#{obj.exemplar}"/>
+                    </p:column> 
                     <p:column headerText="Ações">
                         <div align="center">
                             <p:commandButton icon="ui-icon-pencil"
@@ -93,23 +90,32 @@
                                 <p:panelGrid columns="2">
                                     <p:outputLabel value="ID"/>
                                     <p:inputText value="#{controleEmprestimo.objeto.id}" readonly="true" size="5"/>
-                                    <p:outputLabel value="Titulo" for="txtTitulo"/>
-                                    <p:inputText id="txtTitulo" value="#{controleEmprestimo.objeto.titulo}"
-                                                 size="30" maxlength="30"/>
-                                    <p:outputLabel value="ISBN" for="txtISBN"/>
-                                    <p:inputText id="txtISBN" value="#{controleEmprestimo.objeto.isbn}"
-                                                 size="15" maxlength="15"/>
-                                    <p:outputLabel value="Autor" for="txtAutor"/>
-                                    <p:inputText id="txtAutor" value="#{controleEmprestimo.objeto.autor}"
-                                                 size="50" maxlength="50"/>
-                                    <p:outputLabel value="Genero" for="selectGenero"/>
-                                    <p:selectOneMenu id="selectGenero"
-                                                     value="#{controleEmprestimo.objeto.genero}"
+                                    <p:outputLabel value="Cliente" for="selectCliente"/>
+                                    <p:selectOneMenu id="selectCliente"
+                                                     value="#{controleEmprestimo.objeto.cliente}"
                                                      filter="true" filterMatchMode="startsWith">
-                                        <f:converter converterId="converterGenero"/>
+                                        <f:converter converterId="converterPessoa"/>
                                         <f:selectItem noSelectionOption="true" itemLabel="Selecione um registro"/>
-                                        <f:selectItems value="#{controleEmprestimo.daoGenero.listaTodos}"
+                                        <f:selectItems value="#{controleEmprestimo.daoPessoa.listaTodosClientes}"
                                                        var="prop" itemLabel="#{prop.nome}"/>
+                                    </p:selectOneMenu>
+                                    <p:outputLabel value="Funcionário" for="selectFuncionario"/>
+                                    <p:selectOneMenu id="selectFuncionario"
+                                                     value="#{controleEmprestimo.objeto.funcionario}"
+                                                     filter="true" filterMatchMode="startsWith">
+                                        <f:converter converterId="converterPessoa"/>
+                                        <f:selectItem noSelectionOption="true" itemLabel="Selecione um registro"/>
+                                        <f:selectItems value="#{controleEmprestimo.daoPessoa.listaTodosFuncionarios}"
+                                                       var="prop" itemLabel="#{prop.nome}"/>
+                                    </p:selectOneMenu>
+                                    <p:outputLabel value="Exemplar" for="selectExemplar"/>
+                                    <p:selectOneMenu id="selectExemplar"
+                                                     value="#{controleEmprestimo.objeto.exemplar}"
+                                                     filter="true" filterMatchMode="startsWith">
+                                        <f:converter converterId="converterExemplar"/>
+                                        <f:selectItem noSelectionOption="true" itemLabel="Selecione um registro"/>
+                                        <f:selectItems value="#{controleEmprestimo.daoExemplar.listaTodos}"
+                                                       var="prop" itemLabel="#{prop.livro.titulo}"/>
                                     </p:selectOneMenu>
                                 </p:panelGrid>
                             </div>

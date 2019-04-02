@@ -7,10 +7,10 @@ package br.edu.ifsul.controle;
 
 import br.edu.ifsul.dao.PessoaDAO;
 import br.edu.ifsul.dao.EmprestimoDAO;
-import br.edu.ifsul.dao.LivroDAO;
+import br.edu.ifsul.dao.ExemplarDAO;
 import br.edu.ifsul.modelo.Pessoa;
 import br.edu.ifsul.modelo.Emprestimo;
-import br.edu.ifsul.modelo.Livro;
+import br.edu.ifsul.modelo.Exemplar;
 import br.edu.ifsul.util.Util;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
@@ -26,13 +26,13 @@ public class ControleEmprestimo implements Serializable {
 
     private EmprestimoDAO<Emprestimo> dao;
     private PessoaDAO<Pessoa> daoPessoa;
-    private LivroDAO<Livro> daoLivro;
+    private ExemplarDAO<Exemplar> daoExemplar;
     private Emprestimo objeto;
 
     public ControleEmprestimo() {
         dao = new EmprestimoDAO<>();
         daoPessoa = new PessoaDAO<>();
-        daoLivro = new LivroDAO<>();
+        daoExemplar = new ExemplarDAO<>();
     }
 
     public String listar() {
@@ -101,17 +101,17 @@ public class ControleEmprestimo implements Serializable {
     }
 
     /**
-     * @return the daoLivro
+     * @return the daoExemplar
      */
-    public LivroDAO<Livro> getDaoLivro() {
-        return daoLivro;
+    public ExemplarDAO<Exemplar> getDaoExemplar() {
+        return daoExemplar;
     }
 
     /**
-     * @param daoLivro the daoLivro to set
+     * @param daoExemplar the daoExemplar to set
      */
-    public void setDaoLivro(LivroDAO<Livro> daoLivro) {
-        this.daoLivro = daoLivro;
+    public void setDaoExemplar(ExemplarDAO<Exemplar> daoExemplar) {
+        this.daoExemplar = daoExemplar;
     }
 
 }
