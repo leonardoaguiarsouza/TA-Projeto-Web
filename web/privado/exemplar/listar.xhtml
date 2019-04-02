@@ -6,69 +6,66 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/templates/template.xhtml">
-        <ui:define name="titulo">CRUD de Pessoas</ui:define>
+        <ui:define name="titulo">CRUD de Exemplares</ui:define>
         <ui:define name="conteudo">
             <h:form id="formListagem">
                 <p:growl/>
-                <p:commandButton value="Novo" actionListener="#{controlePessoa.novo()}"
+                <p:commandButton value="Novo" actionListener="#{controleExemplar.novo()}"
                                  icon="ui-icon-plus"
                                  oncomplete="PF('dlg').show();"
                                  update=":formEdicao"/>
                 <div align="center">
                     <p:panelGrid columns="12">
                         <p:outputLabel value="Ordem: "/>
-                        <p:selectOneMenu id="ordem" value="#{controlePessoa.dao.ordem}">
+                        <p:selectOneMenu id="ordem" value="#{controleExemplar.dao.ordem}">
                             <f:selectItem itemLabel="ID" itemValue="id"/>
                             <f:selectItem itemLabel="Nome" itemValue="nome"/>
                             <p:ajax update="listagem"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="Filtro: "/>
-                        <p:inputText value="#{controlePessoa.dao.filtro}"
+                        <p:inputText value="#{controleExemplar.dao.filtro}"
                                      size="20"/>
                         <p:commandButton value="Filtrar" update="listagem"
                                          icon="ui-icon-search"/>
                         <p:outputLabel value="Máximo de objetos: "/>
-                        <p:inputNumber value="#{controlePessoa.dao.maximoObjetos}" size="5"
+                        <p:inputNumber value="#{controleExemplar.dao.maximoObjetos}" size="5"
                                        decimalPlaces="0" decimalSeparator=""
                                        thousandSeparator=""/>
-                        <p:commandButton actionListener="#{controlePessoa.dao.primeiro()}"
+                        <p:commandButton actionListener="#{controleExemplar.dao.primeiro()}"
                                          update="listagem" icon="ui-icon-seek-first"/>
-                        <p:commandButton actionListener="#{controlePessoa.dao.anterior()}"
+                        <p:commandButton actionListener="#{controleExemplar.dao.anterior()}"
                                          update="listagem" icon="ui-icon-seek-prev"/>   
-                        <p:commandButton actionListener="#{controlePessoa.dao.proximo()}"
+                        <p:commandButton actionListener="#{controleExemplar.dao.proximo()}"
                                          update="listagem" icon="ui-icon-seek-next"/>   
-                        <p:commandButton actionListener="#{controlePessoa.dao.ultimo()}"
+                        <p:commandButton actionListener="#{controleExemplar.dao.ultimo()}"
                                          update="listagem" icon="ui-icon-seek-end"/>                          
                     </p:panelGrid>
 
                 </div>
-                <p:dataTable value="#{controlePessoa.dao.listaObjetos}" var="obj" id="listagem">
+                <p:dataTable value="#{controleExemplar.dao.listaObjetos}" var="obj" id="listagem">
                     <f:facet name="footer">
                         <div align="center">
-                            <p:outputLabel value="#{controlePessoa.dao.mensagemNavegacao}"/>
+                            <p:outputLabel value="#{controleExemplar.dao.mensagemNavegacao}"/>
                         </div>
                     </f:facet>
                     <p:column headerText="ID">
                         <p:outputLabel value="#{obj.id}"/>
                     </p:column>
-                    <p:column headerText="Nome">
-                        <p:outputLabel value="#{obj.nome}"/>
+                    <p:column headerText="Título">
+                        <p:outputLabel value="#{obj.livro.titulo}"/>
                     </p:column>
-                    <p:column headerText="CPF">
-                        <p:outputLabel value="#{obj.cpf}"/>
-                    </p:column>
-                    <p:column headerText="Telefone">
-                        <p:outputLabel value="#{obj.telefone}"/>
-                    </p:column>  
+                    <p:column headerText="Quantidade">
+                        <p:outputLabel value="#{obj.quantidade}"/>
+                    </p:column> 
                     <p:column headerText="Ações">
                         <div align="center">
                             <p:commandButton icon="ui-icon-pencil"
-                                             actionListener="#{controlePessoa.editar(obj.id)}"
+                                             actionListener="#{controleExemplar.editar(obj.id)}"
                                              title="Editar" 
                                              oncomplete="PF('dlg').show();"
                                              update=":formEdicao"/>
                             <p:commandButton icon="ui-icon-trash" title="Remover"
-                                             action="#{controlePessoa.remover(obj.id)}"
+                                             action="#{controleExemplar.remover(obj.id)}"
                                              update="@form" process="@form"
                                              onclick="if (!confirm('Confirma a exclusão?'))
                                                          return false"/>
@@ -88,33 +85,25 @@
                                 <div align="center">
                                     <p:commandButton value="Salvar"
                                                      icon="ui-icon-disk"
-                                                     actionListener="#{controlePessoa.salvar()}"
+                                                     actionListener="#{controleExemplar.salvar()}"
                                                      oncomplete="if(!args.validationFailed){PF('dlg').hide();}"
                                                      update=":formEdicao :formListagem"/>
                                 </div>
                             </f:facet>
                             <p:outputLabel value="ID"/>
-                            <p:inputText value="#{controlePessoa.objeto.id}" readonly="true" size="5"/>
-                            <p:outputLabel value="Nome" for="txtNome"/>
-                            <p:inputText id="txtNome" value="#{controlePessoa.objeto.nome}"
-                                         size="40" maxlength="40"/>
-                            <p:outputLabel value="CPF" for="txtCpf"/>
-                            <p:inputText id="txtCpf" value="#{controlePessoa.objeto.cpf}"
-                                         size="14" maxlength="14"/>
-                            <p:outputLabel value="Telefone" for="txtTelefone"/>
-                            <p:inputText id="txtTelefone" value="#{controlePessoa.objeto.telefone}"
-                                         size="15" maxlength="15"/>
-                            <p:outputLabel value="Login" for="txtLogin"/>
-                            <p:inputText id="txtLogin" value="#{controlePessoa.objeto.login}"
-                                         size="20" maxlength="20"/>
-                            <p:outputLabel value="Senha" for="txtSenha"/>
-                            <p:inputText id="txtSenha" value="#{controlePessoa.objeto.senha}"
-                                         size="20" maxlength="20"/>
-                            <p:outputLabel value="Tipo"/>
-                            <p:selectOneRadio id="radioTipo" value="#{controlePessoa.objeto.tipo}">
-                                <f:selectItem itemLabel="Cliente" itemValue="c"/>
-                                <f:selectItem itemLabel="Funcionário" itemValue="f" />
-                            </p:selectOneRadio>
+                            <p:inputText value="#{controleExemplar.objeto.id}" readonly="true" size="5"/>
+                            <p:outputLabel value="Quantidade" for="txtQuantidade"/>
+                            <p:inputText id="txtQuantidade" value="#{controleExemplar.objeto.quantidade}"
+                                         size="4" maxlength="3"/>
+                            <p:outputLabel value="Livro" for="selectLivro"/>
+                            <p:selectOneMenu id="selectLivro"
+                                             value="#{controleExemplar.objeto.livro}"
+                                             filter="true" filterMatchMode="startsWith">
+                                <f:converter converterId="converterLivro"/>
+                                <f:selectItem noSelectionOption="true" itemLabel="Selecione um registro"/>
+                                <f:selectItems value="#{controleExemplar.daoLivro.listaTodos}"
+                                               var="prop" itemLabel="#{prop.titulo}"/>
+                            </p:selectOneMenu>
 
                         </p:panelGrid>
                     </div>
