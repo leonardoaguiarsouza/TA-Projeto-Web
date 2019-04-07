@@ -13,6 +13,8 @@ public class DAOGenerico<TIPO> {
 
     private List<TIPO> listaObjetos;
     private List<TIPO> listaTodos;
+    private List<TIPO> listaClientes;
+    private List<TIPO> listaFuncionarios;
     protected EntityManager em;
     protected Class classePersistente;
     private String mensagem;
@@ -88,6 +90,16 @@ public class DAOGenerico<TIPO> {
 
     public List<TIPO> getListaTodos() {
         String jpql = "from " + classePersistente.getSimpleName();
+        return em.createQuery(jpql).getResultList();
+    }
+    
+    public List<TIPO> getListaClientes() {
+        String jpql = "from " + classePersistente.getSimpleName() + " where tipo = 'c'";
+        return em.createQuery(jpql).getResultList();
+    }
+    
+    public List<TIPO> getListaFuncionarios() {
+        String jpql = "from " + classePersistente.getSimpleName() + " where tipo = 'f'";
         return em.createQuery(jpql).getResultList();
     }
 
@@ -216,6 +228,20 @@ public class DAOGenerico<TIPO> {
 
     public void setTotalObjetos(Integer totalObjetos) {
         this.totalObjetos = totalObjetos;
+    }
+
+    /**
+     * @param listaClientes the listaClientes to set
+     */
+    public void setListaClientes(List<TIPO> listaClientes) {
+        this.listaClientes = listaClientes;
+    }
+
+    /**
+     * @param listaFuncionarios the listaFuncionarios to set
+     */
+    public void setListaFuncionarios(List<TIPO> listaFuncionarios) {
+        this.listaFuncionarios = listaFuncionarios;
     }
 
 }

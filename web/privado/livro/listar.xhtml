@@ -84,46 +84,42 @@
             </h:form>
         </ui:define>
         <ui:define name="dialogos">
-            <p:dialog widgetVar="dlg" header="Edição" modal="true" resizable="false" width="650" height="480">
+            <p:dialog widgetVar="dlg" header="Edição" modal="true" resizable="false">
                 <h:form id="formEdicao" prependId="false">
                     <p:growl id="growl"/>
-                    <p:tabView id="tab" prependId="false">
-                        <p:tab title="Dados Principais">
-                            <div align="center">
-                                <p:panelGrid columns="2">
-                                    <p:outputLabel value="ID"/>
-                                    <p:inputText value="#{controleLivro.objeto.id}" readonly="true" size="5"/>
-                                    <p:outputLabel value="Titulo" for="txtTitulo"/>
-                                    <p:inputText id="txtTitulo" value="#{controleLivro.objeto.titulo}"
-                                                 size="30" maxlength="30"/>
-                                    <p:outputLabel value="ISBN" for="txtISBN"/>
-                                    <p:inputText id="txtISBN" value="#{controleLivro.objeto.isbn}"
-                                                 size="15" maxlength="15"/>
-                                    <p:outputLabel value="Autor" for="txtAutor"/>
-                                    <p:inputText id="txtAutor" value="#{controleLivro.objeto.autor}"
-                                                 size="50" maxlength="50"/>
-                                    <p:outputLabel value="Genero" for="selectGenero"/>
-                                    <p:selectOneMenu id="selectGenero"
-                                                     value="#{controleLivro.objeto.genero}"
-                                                     filter="true" filterMatchMode="startsWith">
-                                        <f:converter converterId="converterGenero"/>
-                                        <f:selectItem noSelectionOption="true" itemLabel="Selecione um registro"/>
-                                        <f:selectItems value="#{controleLivro.daoGenero.listaTodos}"
-                                                       var="prop" itemLabel="#{prop.nome}"/>
-                                    </p:selectOneMenu>
-                                </p:panelGrid>
-                            </div>
-                        </p:tab>
-                    </p:tabView>  
-                    <p:panel>
-                        <div align="center">
-                            <p:commandButton value="Salvar"
-                                             icon="ui-icon-disk"
-                                             actionListener="#{controleLivro.salvar()}"
-                                             oncomplete="if(!args.validationFailed){PF('dlg').hide();}"
-                                             update="formEdicao formListagem"/>
-                        </div>
-                    </p:panel>
+                    <div align="center">
+                        <p:panelGrid columns="2">
+                            <f:facet name="footer">
+                                <div align="center">
+                                    <p:commandButton value="Salvar"
+                                                     icon="ui-icon-disk"
+                                                     actionListener="#{controleLivro.salvar()}"
+                                                     oncomplete="if(!args.validationFailed){PF('dlg').hide();}"
+                                                     update="formEdicao formListagem"/>
+                                </div>
+                            </f:facet>
+                            <p:outputLabel value="ID"/>
+                            <p:inputText value="#{controleLivro.objeto.id}" readonly="true" size="5"/>
+                            <p:outputLabel value="Titulo" for="txtTitulo"/>
+                            <p:inputText id="txtTitulo" value="#{controleLivro.objeto.titulo}"
+                                         size="30" maxlength="30"/>
+                            <p:outputLabel value="ISBN" for="txtISBN"/>
+                            <p:inputText id="txtISBN" value="#{controleLivro.objeto.isbn}"
+                                         size="15" maxlength="15"/>
+                            <p:outputLabel value="Autor" for="txtAutor"/>
+                            <p:inputText id="txtAutor" value="#{controleLivro.objeto.autor}"
+                                         size="50" maxlength="50"/>
+                            <p:outputLabel value="Genero" for="selectGenero"/>
+                            <p:selectOneMenu id="selectGenero"
+                                             value="#{controleLivro.objeto.genero}"
+                                             filter="true" filterMatchMode="startsWith">
+                                <f:converter converterId="converterGenero"/>
+                                <f:selectItem noSelectionOption="true" itemLabel="Selecione um registro"/>
+                                <f:selectItems value="#{controleLivro.daoGenero.listaTodos}"
+                                               var="prop" itemLabel="#{prop.nome}"/>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                    </div> 
                 </h:form>
             </p:dialog>
         </ui:define>

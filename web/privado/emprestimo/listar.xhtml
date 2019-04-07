@@ -52,13 +52,13 @@
                         <p:outputLabel value="#{obj.id}"/>
                     </p:column>
                     <p:column headerText="Cliente">
-                        <p:outputLabel value="#{obj.cliente}"/>
+                        <p:outputLabel value="#{obj.cliente.nome}"/>
                     </p:column>
                     <p:column headerText="Funcionario">
-                        <p:outputLabel value="#{obj.funcionario}"/>
+                        <p:outputLabel value="#{obj.funcionario.nome}"/>
                     </p:column>
                     <p:column headerText="Exemplar">
-                        <p:outputLabel value="#{obj.exemplar}"/>
+                        <p:outputLabel value="#{obj.exemplar.livro.titulo}"/>
                     </p:column> 
                     <p:column headerText="Ações">
                         <div align="center">
@@ -81,55 +81,52 @@
             </h:form>
         </ui:define>
         <ui:define name="dialogos">
-            <p:dialog widgetVar="dlg" header="Edição" modal="true" resizable="false" width="650" height="480">
+            <p:dialog widgetVar="dlg" header="Edição" modal="true" resizable="false">
                 <h:form id="formEdicao" prependId="false">
                     <p:growl id="growl"/>
-                    <p:tabView id="tab" prependId="false">
-                        <p:tab title="Dados Principais">
-                            <div align="center">
-                                <p:panelGrid columns="2">
-                                    <p:outputLabel value="ID"/>
-                                    <p:inputText value="#{controleEmprestimo.objeto.id}" readonly="true" size="5"/>
-                                    <p:outputLabel value="Cliente" for="selectCliente"/>
-                                    <p:selectOneMenu id="selectCliente"
-                                                     value="#{controleEmprestimo.objeto.cliente}"
-                                                     filter="true" filterMatchMode="startsWith">
-                                        <f:converter converterId="converterPessoa"/>
-                                        <f:selectItem noSelectionOption="true" itemLabel="Selecione um registro"/>
-                                        <f:selectItems value="#{controleEmprestimo.daoPessoa.listaTodosClientes}"
-                                                       var="prop" itemLabel="#{prop.nome}"/>
-                                    </p:selectOneMenu>
-                                    <p:outputLabel value="Funcionário" for="selectFuncionario"/>
-                                    <p:selectOneMenu id="selectFuncionario"
-                                                     value="#{controleEmprestimo.objeto.funcionario}"
-                                                     filter="true" filterMatchMode="startsWith">
-                                        <f:converter converterId="converterPessoa"/>
-                                        <f:selectItem noSelectionOption="true" itemLabel="Selecione um registro"/>
-                                        <f:selectItems value="#{controleEmprestimo.daoPessoa.listaTodosFuncionarios}"
-                                                       var="prop" itemLabel="#{prop.nome}"/>
-                                    </p:selectOneMenu>
-                                    <p:outputLabel value="Exemplar" for="selectExemplar"/>
-                                    <p:selectOneMenu id="selectExemplar"
-                                                     value="#{controleEmprestimo.objeto.exemplar}"
-                                                     filter="true" filterMatchMode="startsWith">
-                                        <f:converter converterId="converterExemplar"/>
-                                        <f:selectItem noSelectionOption="true" itemLabel="Selecione um registro"/>
-                                        <f:selectItems value="#{controleEmprestimo.daoExemplar.listaTodos}"
-                                                       var="prop" itemLabel="#{prop.livro.titulo}"/>
-                                    </p:selectOneMenu>
-                                </p:panelGrid>
-                            </div>
-                        </p:tab>
-                    </p:tabView>  
-                    <p:panel>
-                        <div align="center">
-                            <p:commandButton value="Salvar"
-                                             icon="ui-icon-disk"
-                                             actionListener="#{controleEmprestimo.salvar()}"
-                                             oncomplete="if(!args.validationFailed){PF('dlg').hide();}"
-                                             update="formEdicao formListagem"/>
-                        </div>
-                    </p:panel>
+
+                    <div align="center">
+                        <p:panelGrid columns="2">
+                            <f:facet name="footer">
+                                <div align="center">
+                                    <p:commandButton value="Salvar"
+                                                     icon="ui-icon-disk"
+                                                     actionListener="#{controleEmprestimo.salvar()}"
+                                                     oncomplete="if(!args.validationFailed){PF('dlg').hide();}"
+                                                     update="formEdicao formListagem"/>
+                                </div>
+                            </f:facet>
+                            <p:outputLabel value="ID"/>
+                            <p:inputText value="#{controleEmprestimo.objeto.id}" readonly="true" size="5"/>
+                            <p:outputLabel value="Cliente" for="selectCliente"/>
+                            <p:selectOneMenu id="selectCliente"
+                                             value="#{controleEmprestimo.objeto.cliente}"
+                                             filter="true" filterMatchMode="startsWith">
+                                <f:converter converterId="converterPessoa"/>
+                                <f:selectItem noSelectionOption="true" itemLabel="Selecione um registro"/>
+                                <f:selectItems value="#{controleEmprestimo.daoPessoa.listaClientes}"
+                                               var="prop" itemLabel="#{prop.nome}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Funcionário" for="selectFuncionario"/>
+                            <p:selectOneMenu id="selectFuncionario"
+                                             value="#{controleEmprestimo.objeto.funcionario}"
+                                             filter="true" filterMatchMode="startsWith">
+                                <f:converter converterId="converterPessoa"/>
+                                <f:selectItem noSelectionOption="true" itemLabel="Selecione um registro"/>
+                                <f:selectItems value="#{controleEmprestimo.daoPessoa.listaFuncionarios}"
+                                               var="prop" itemLabel="#{prop.nome}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Exemplar" for="selectExemplar"/>
+                            <p:selectOneMenu id="selectExemplar"
+                                             value="#{controleEmprestimo.objeto.exemplar}"
+                                             filter="true" filterMatchMode="startsWith">
+                                <f:converter converterId="converterExemplar"/>
+                                <f:selectItem noSelectionOption="true" itemLabel="Selecione um registro"/>
+                                <f:selectItems value="#{controleEmprestimo.daoExemplar.listaTodos}"
+                                               var="prop" itemLabel="#{prop.livro.titulo}"/>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                    </div> 
                 </h:form>
             </p:dialog>
         </ui:define>
