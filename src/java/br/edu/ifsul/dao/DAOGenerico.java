@@ -52,6 +52,31 @@ public class DAOGenerico<TIPO> {
                 setFirstResult(posicaoAtual).
                 setMaxResults(maximoObjetos).getResultList();
     }
+    
+    public List<TIPO> getListaObjetosHoje() {
+        String jpql = "from " + classePersistente.getSimpleName();
+        String where = "";
+        // filtrar a entrada para proteger de injeção de sql
+        filtro = filtro.replaceAll("[';-]", "");
+        if (filtro.length() > 0) {
+            if (ordem.equals("id")) {
+                try {
+                    Integer.parseInt(filtro);
+                    where += " where " + ordem + " = '" + filtro + "' ";
+                } catch (Exception e) {
+
+                }
+            } else {
+                where += " where data_prev_devolucao=current_date and upper(" + ordem + ") like '" + filtro.toUpperCase() + "%' ";
+            }
+        }
+        jpql += where;
+        jpql += " order by " + ordem;
+        totalObjetos = em.createQuery(jpql).getResultList().size();
+        return em.createQuery(jpql).
+                setFirstResult(posicaoAtual).
+                setMaxResults(maximoObjetos).getResultList();
+    }
 
     public void primeiro() {
         posicaoAtual = 0;
